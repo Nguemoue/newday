@@ -18,9 +18,24 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getModelLabel(): string
+    {
+        return __('Actualité');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Actualités');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Gestion du Contenu');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -17,12 +17,17 @@ class PartnersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Nom'))
                     ->searchable(),
-                ImageColumn::make('logo'),
+                ImageColumn::make('logo')
+                    ->label(__('Logo')),
                 TextColumn::make('website')
+                    ->label(__('Site Web'))
                     ->searchable(),
-                ToggleColumn::make('is_active'),
+                ToggleColumn::make('is_active')
+                    ->label(__('Actif')),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

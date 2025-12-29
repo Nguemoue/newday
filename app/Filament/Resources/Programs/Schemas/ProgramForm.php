@@ -17,22 +17,28 @@ class ProgramForm
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label(__('Titre'))
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
                     ->maxLength(255),
                 TextInput::make('slug')
+                    ->label(__('Slug (URL)'))
                     ->required()
                     ->maxLength(255),
                 Textarea::make('description')
+                    ->label(__('Description courte'))
                     ->required()
                     ->columnSpanFull(),
                 RichEditor::make('content')
+                    ->label(__('Contenu détaillé'))
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->label(__('Image de couverture'))
                     ->image()
                     ->directory('programs-images'),
                 TextInput::make('icon')
+                    ->label(__('Icône (classe CSS ou SVG)'))
                      ->maxLength(255),
             ]);
     }

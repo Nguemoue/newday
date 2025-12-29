@@ -15,13 +15,17 @@ class ImpactStatsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Titre'))
                     ->searchable(),
                 TextColumn::make('value')
+                    ->label(__('Valeur'))
                     ->searchable(),
                 TextColumn::make('sort_order')
+                    ->label(__('Ordre'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

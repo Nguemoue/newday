@@ -14,15 +14,19 @@ class PartnerForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Nom du partenaire'))
                     ->required()
                     ->maxLength(255),
                 FileUpload::make('logo')
+                    ->label(__('Logo'))
                     ->image()
                     ->directory('partners-logos'),
                 TextInput::make('website')
+                    ->label(__('Site Web'))
                     ->url()
                     ->maxLength(255),
                 Toggle::make('is_active')
+                    ->label(__('Actif'))
                     ->required(),
             ]);
     }

@@ -17,12 +17,17 @@ class TestimonialsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Nom'))
                     ->searchable(),
                 TextColumn::make('role')
+                    ->label(__('Rôle'))
                     ->searchable(),
-                ImageColumn::make('photo'),
-                ToggleColumn::make('is_featured'),
+                ImageColumn::make('photo')
+                    ->label(__('Photo')),
+                ToggleColumn::make('is_featured')
+                    ->label(__('À la une')),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -18,9 +18,24 @@ class ImpactStatResource extends Resource
 {
     protected static ?string $model = ImpactStat::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getModelLabel(): string
+    {
+        return __('Statistique d\'Impact');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Statistiques d\'Impact');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Organisation');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -17,15 +17,21 @@ class TeamMembersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Nom'))
                     ->searchable(),
                 TextColumn::make('role')
+                    ->label(__('Rôle'))
                     ->searchable(),
-                ImageColumn::make('photo'),
-                ToggleColumn::make('is_active'),
+                ImageColumn::make('photo')
+                    ->label(__('Photo')),
+                ToggleColumn::make('is_active')
+                    ->label(__('Actif')),
                 TextColumn::make('sort_order')
+                    ->label(__('Ordre'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

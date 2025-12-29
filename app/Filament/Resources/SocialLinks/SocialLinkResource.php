@@ -20,11 +20,22 @@ class SocialLinkResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShare;
 
-    protected static ?string $navigationLabel = 'Réseaux Sociaux';
-
-    protected static ?string $modelLabel = 'Réseau Social';
-
     protected static ?string $recordTitleAttribute = 'platform';
+
+    public static function getModelLabel(): string
+    {
+        return __('Réseau Social');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Réseaux Sociaux');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Organisation');
+    }
 
     public static function form(Schema $schema): Schema
     {

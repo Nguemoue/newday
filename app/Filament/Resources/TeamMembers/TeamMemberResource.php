@@ -18,9 +18,24 @@ class TeamMemberResource extends Resource
 {
     protected static ?string $model = TeamMember::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getModelLabel(): string
+    {
+        return __('Membre de l\'équipe');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Membres de l\'équipe');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Organisation');
+    }
 
     public static function form(Schema $schema): Schema
     {

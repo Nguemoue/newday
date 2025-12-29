@@ -18,9 +18,24 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getModelLabel(): string
+    {
+        return __('Programme');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Programmes');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Gestion du Contenu');
+    }
 
     public static function form(Schema $schema): Schema
     {

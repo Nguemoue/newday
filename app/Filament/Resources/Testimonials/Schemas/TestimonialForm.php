@@ -15,17 +15,22 @@ class TestimonialForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('Nom complet'))
                     ->required()
                     ->maxLength(255),
                 TextInput::make('role')
+                    ->label(__('Rôle / Fonction'))
                     ->maxLength(255),
                 Textarea::make('content')
+                    ->label(__('Témoignage'))
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('photo')
+                    ->label(__('Photo'))
                     ->image()
                     ->directory('testimonials-photos'),
                 Toggle::make('is_featured')
+                    ->label(__('Afficher sur l\'accueil'))
                     ->required(),
             ]);
     }

@@ -18,9 +18,24 @@ class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleBottomCenterText;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getModelLabel(): string
+    {
+        return __('Témoignage');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Témoignages');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Gestion du Contenu');
+    }
 
     public static function form(Schema $schema): Schema
     {

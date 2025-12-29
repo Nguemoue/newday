@@ -16,9 +16,12 @@ class ProgramsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Titre'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

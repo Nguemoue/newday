@@ -17,13 +17,18 @@ class PostsTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Titre'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('Image')),
                 TextColumn::make('published_at')
+                    ->label(__('Publié le'))
                     ->dateTime()
                     ->sortable(),
-                ToggleColumn::make('is_featured'),
+                ToggleColumn::make('is_featured')
+                    ->label(__('À la une')),
                 TextColumn::make('created_at')
+                    ->label(__('Créé le'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
