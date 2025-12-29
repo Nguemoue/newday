@@ -2,9 +2,9 @@ name: Laravel CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [develop, main]
   pull_request:
-    branches: [ main ]
+    branches: [main, develop]
 
 jobs:
   laravel-tests:
@@ -47,17 +47,17 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
-      #       1. Syntax check
-      #      - name: PHP Syntax Check
-      #        run: find . -path ./vendor -prune -o -type f -name "*.php" -print | xargs -P 4 -n 1 php -l
+      # 1. Syntax check
+      - name: PHP Syntax Check
+        run: find . -path ./vendor -prune -o -type f -name "*.php" -print | xargs -P 4 -n 1 php -l
 
       # 2. Code style formatting
-      #- name: Check code style (Pint)
-      #run: ./vendor/bin/pint --test
+      - name: Check code style (Pint)
+        run: ./vendor/bin/pint --test
 
       # 3. Static analysis
-      #      - name: Static analysis (Larastan)
-      #        run: ./vendor/bin/phpstan analyse --level=max
+      # - name: Static analysis (Larastan)
+      #   run: ./vendor/bin/phpstan analyse --level=max
 
       # 4. Migrate and seed database
       - name: Run migrations and seeds
@@ -73,16 +73,29 @@ jobs:
       - name: Run security audit
         run: composer audit
 
-     #7. (Optional) Deploy on push to main
-      - name: Deploy to production
-        if: github.ref == 'refs/heads/develop' && success()
-        run: ssh -p 65002 u536565195@72.60.93.25  "cd /var/www/your-app && git pull origin main && php artisan migrate --force"
+      # 7. Deploy to Hostinger on push to main
+      - name: Deploy to Hostinger
+        if: github.ref == 'refs/heads/main' && success()
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 72.60.93.25
+          username: u536565195
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          port: 65002
+          script: |
+            # Remplacez le chemin ci-dessous par le chemin réel de votre projet sur Hostinger
+            cd /home/u536565195/domains/newdayassociation.org/public_html
 
-      # 8. (Optional) Slack notification on failure
-#      - name: Notify Slack on Failure
-#        if: failure()
-#        uses: rtCamp/action-slack-notify@v2
-#        env:
-#          SLACK_COLOR: '#FF0000'
-#          SLACK_MESSAGE: '🚨 Laravel CI pipeline failed on ${{ github.ref }} by ${{ github.actor }}'
-#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            # Mise à jour du code
+            git pull origin main
+
+            # Installation des dépendances (sans dev)
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+            # Migrations et maintenance
+            php artisan down
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            php artisan up
