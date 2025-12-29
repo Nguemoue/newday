@@ -27,10 +27,14 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->registration()
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Slate, // Plus sobre et professionnel que Amber
+                'gray' => Color::Slate,
             ])
+            ->brandName('New Day Admin')
+            ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -39,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                // FilamentInfoWidget::class, // On retire le widget de pub Filament pour un rendu plus pro
             ])
             ->middleware([
                 EncryptCookies::class,

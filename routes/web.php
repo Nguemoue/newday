@@ -33,6 +33,9 @@ Route::group([
     Route::get('/donate', [\App\Http\Controllers\Web\FrontendSupportController::class, 'donate'])->name('web.donate');
     Route::get('/volunteer', [\App\Http\Controllers\Web\FrontendSupportController::class, 'volunteer'])->name('web.volunteer');
 
+    // Nouvelle route pour les réseaux sociaux
+    Route::get('/social', \App\Http\Controllers\Web\FrontendSocialController::class)->name('web.social');
+
     Route::get('/contact', [\App\Http\Controllers\Web\FrontendContactController::class,'show'])->name('web.contact');
     Route::post("/contact", [\App\Http\Controllers\Web\FrontendContactController::class,'store'])->name("web.contact.store");
 });
