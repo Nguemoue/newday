@@ -1,44 +1,61 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" data-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', __('layout.site_title'))</title>
-    {{-- You can override this description in child views --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>@yield('title', config('app.name', 'New Day'))</title>
     <meta name="description" content="@yield('meta_description', __('layout.footer_about'))">
+
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
-    {{-- Import compiled Tailwind CSS & DaisyUI (already included in app.css) --}}
-    @vite('resources/css/app.css')
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts & Styles -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="bg-base-100 text-base-content flex flex-col min-h-screen">
-{{-- Top notification bar --}}
-@includeIf('layouts.partials.topbar')
+<body class="bg-base-100 text-base-content flex flex-col min-h-screen font-sans antialiased">
 
-{{-- Main navigation bar --}}
-@includeIf('layouts.partials.navbar')
+    {{-- Top notification bar --}}
+    @includeIf('layouts.partials.topbar')
 
-{{-- Hero Carousel --}}
-@sectionMissing('hero')
-    @includeIf('layouts.partials.hero')
-@endif
+    {{-- Main navigation bar --}}
+    @includeIf('layouts.partials.navbar')
 
-{{-- Main content area --}}
-@yield('content')
+    {{-- Hero Section (Home) --}}
+    @hasSection('hero')
+        @yield('hero')
+    @endif
 
-{{-- Footer --}}
-@includeIf('layouts.partials.footer')
+    {{-- Page Header (Internal pages) --}}
+    @hasSection('page_header')
+        @yield('page_header')
+    @endif
 
-{{-- Mobile menu toggle script --}}
-<script>
-    const mobileToggle = document.getElementById('mobileMenuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+    {{-- Main content area --}}
+    <main class="flex-grow">
+        @yield('content')
+    </main>
+
+    {{-- Footer --}}
+    @includeIf('layouts.partials.footer')
+
+    {{-- Mobile menu toggle script --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         });
-    }
-</script>
-@stack('scripts')
+    </script>
+    @stack('scripts')
 </body>
 </html>
